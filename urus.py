@@ -12,7 +12,7 @@ class Beer(object):
 
 class BeerFromReviews(Beer):
     def __init__(self, beer):
-        with open(beer + "_reviews.txt") as review_file:
+        with open("reviews/%s_reviews.txt" % beer) as review_file:
             reviews = review_file.read().decode("utf").encode("ascii", "ignore").lower().split("<split>")
             self.tags = self._get_bag(reviews)
         super(BeerFromReviews, self).__init__()
