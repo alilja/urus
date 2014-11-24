@@ -35,8 +35,18 @@ class Urus(object):
         _FLAVOR_CORPUS = review_file.readlines()
         _FLAVOR_CORPUS = [flavor.strip("\n") for flavor in _FLAVOR_CORPUS]
 
+    def calculate_score(self, beer_one, beer_two):
+        # sum all the shared tags — scores that are
+        # close to each other are more likely to be
+        #
+        for tag, score in beer_one.tags.items():
+            if tag in beer_two.tags.keys():
+                pass
+
+
 summit = BeerFromReviews("summit")
 tour = BeerFromReviews("tourdefall")
 trappist = BeerFromReviews("trappist")
+
 for tag, weight in summit.tags.items():
     print tag, weight
