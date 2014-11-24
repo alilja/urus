@@ -1,20 +1,21 @@
 from string import maketrans
 from collections import Counter
+from math import log
 
 
 class Beer(object):
     def _calculate_tag_weight(self, tags):
-        total = len(tags)
-        # weight everything on a curve, so the most common tags are highly weighted
-        # do some normalization too
-        return tags
+        total = sum(tags.values())
+        most_common = tags.most_common(10)
+        weights = {word: 1.1**(float(freq) / 2) for (word, freq) in tags.items()}
+        return weights
 
 
 class BeerFromReviews(Beer):
     def __init__(self, beer):
         with open("reviews/%s_reviews.txt" % beer) as review_file:
             reviews = review_file.read().decode("utf").encode("ascii", "ignore").lower().split("<split>")
-            self.tags = self._get_bag(reviews)
+            self.tags = self._calculate_tag_weight(self._get_bag(reviews))
         super(BeerFromReviews, self).__init__()
 
     def _get_bag(self, reviews):
@@ -35,5 +36,7 @@ class Urus(object):
         _FLAVOR_CORPUS = [flavor.strip("\n") for flavor in _FLAVOR_CORPUS]
 
 summit = BeerFromReviews("summit")
-for tag in summit.tags:
-    print tag
+tour = BeerFromReviews("tourdefall")
+trappist = BeerFromReviews("trappist")
+for tag, weight in summit.tags.items():
+    print tag, weight
