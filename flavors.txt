@@ -1,11 +1,11 @@
 alder
-almond nuttiness
+almond
 anise
 apple
 apricot
-autumn berries
-bakewell tart
+autumn
 banana
+bad
 basil
 beech
 beechwood
@@ -17,13 +17,13 @@ blackberry
 blackcurrant
 brandy
 bread
-brown sugar
+brown
 burnt
 butter
 buttered popcorn
 cake malt
 iraisins
-candy sugar
+candy
 caramel
 caramel malt
 cherry
@@ -65,8 +65,6 @@ herbs
 hibiscus
 honey
 honey on toast
-hop
-hoppy
 hops
 lemon
 lemon cake
@@ -156,9 +154,8 @@ solvent
 sour
 stale
 suspect
-taste bad
+sugar
 tasteless
-turn bad
 undrinkable
 unpleasant
 warm
