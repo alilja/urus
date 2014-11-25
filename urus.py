@@ -5,13 +5,6 @@ from pyxdameraulevenshtein import damerau_levenshtein_distance
 levenshtein = damerau_levenshtein_distance
 
 
-class Beer(object):
-    def __init__(self, name):
-        with open("reviews/%s_reviews.txt" % name) as review_file:
-            reviews = review_file.read().decode("utf").encode("ascii", "ignore").lower().split("<split>")
-            self.tags = Urus.get_bag(reviews)
-            self.name = name
-
 class Urus(object):
     _FLAVOR_CORPUS = []
     with open("flavors.txt") as review_file:
@@ -42,21 +35,11 @@ class Urus(object):
                         output.append(word)
         return output
 
-
-def calculate_score(self, beer_one, beer_two):
-    # sum all the shared tags -- scores that are
-    # close to each other are more likely to be
-    #
-    for tag, score in beer_one.tags.items():
-        if tag in beer_two.tags.keys():
-            pass
-
-summit = Beer("summit")
-tour = Beer("tourdefall")
-trappist = Beer("trappist")
-
-print summit.tags.most_common(15)
-print "---"
-print trappist.tags.most_common(15)
-print "---"
-print [(key, value) for key, value in summit.tags.items() if key in trappist.tags.keys()]
+    @staticmethod
+    def calculate_score(self, tags_one, tags_two):
+        # sum all the shared tags -- scores that are
+        # close to each other are more likely to be
+        #
+        for tag, score in tags_one.items():
+            if tag in tags_two.keys():
+                pass
