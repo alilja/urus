@@ -4,12 +4,11 @@ from collections import Counter
 from pyxdameraulevenshtein import damerau_levenshtein_distance
 levenshtein = damerau_levenshtein_distance
 
+import corpus
+
 
 class Urus(object):
-    _FLAVOR_CORPUS = []
-    with open("flavors.txt") as review_file:
-        _FLAVOR_CORPUS = review_file.readlines()
-        _FLAVOR_CORPUS = [flavor.strip("\n") for flavor in _FLAVOR_CORPUS]
+    _FLAVOR_CORPUS = corpus.flavors
 
     @staticmethod
     def get_bag(reviews):
