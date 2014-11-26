@@ -13,8 +13,4 @@ summit = Beer("summit")
 tour = Beer("tourdefall")
 trappist = Beer("trappist")
 
-print summit.tags.most_common(15)
-print "---"
-print trappist.tags.most_common(15)
-print "---"
-print [(key, value) for key, value in summit.tags.items() if key in trappist.tags.keys()]
+print Urus.calculate_score(tour.tags, trappist.tags)
