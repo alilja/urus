@@ -51,7 +51,7 @@ class Urus(object):
             if tag in target_common.keys():
                 differences.append((target_common[tag] - rank)**2)
             else:
-                differences.append(10)
+                differences.append(n)
         return 1 - (
             float(6 * sum(differences)) /
             float(n * (n**2 - 1))

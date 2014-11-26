@@ -9,8 +9,17 @@ class Beer(object):
             self.name = name
 
 
-summit = Beer("summit")
-tour = Beer("tourdefall")
-trappist = Beer("trappist")
+beers = [
+    Beer("summit"),
+    Beer("tourdefall"),
+    Beer("trappist"),
+]
 
-print Urus.calculate_score(tour.tags, trappist.tags)
+for beer in beers:
+    target_beers = [target_beer for target_beer in beers if target_beer is not beer]
+    for target_beer in target_beers:
+        print "{0} vs. {1}: {2}".format(
+            beer.name,
+            target_beer.name,
+            Urus.calculate_score(beer.tags, target_beer.tags, 100)
+        )
