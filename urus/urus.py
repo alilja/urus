@@ -37,25 +37,22 @@ class Urus(object):
 
     @staticmethod
     def calculate_score(base, target, n=10):
-        """ implementation according to
-        http://luthuli.cs.uiuc.edu/~daf/courses/Signals%20AI/Papers/Collocation/kilgarriff98measures.pdf"""
-        def rank_tags(tags):
-            tupled = map(tuple, enumerate(sorted(tags, key=tags.get, reverse=True)))
-            return [(a, b) for (b, a) in tupled]
+        def expected(tags_one, tags_two, word):
+            n_one = sum((freq for (key, freq) in tags_one.most_common(n)))
+            n_two = sum((freq for (key, freq) in tags_two.most_common(n)))
+            return (
+                (n_one * (tags_one[word] + tags_two[word])) /
+                (n_one + n_two)
+            )
 
-        base_common = dict(rank_tags(base)[:n])
-        target_common = dict(rank_tags(target)[:n])
+        def calculate_chi(tags_one, tags_two, word):
+            exp = expected(tags_one, tags_two, word)
+            return (tags_one[word] - exp  ** 2) / exp
+        chi = 0
+        for i in range(n):
+            for word, frequency in base.items():
+                if word in target.keys():
+                    chi += calculate_chi(base, target, word)
 
-        differences = []
-        for tag, rank in base_common.items():
-            if tag in target_common.keys():
-                differences.append((target_common[tag] - rank)**2)
-            else:
-                differences.append(n)
-        return 1 - (
-            float(6 * sum(differences)) /
-            float(n * (n**2 - 1))
-        )
-
-
+        return chi
 
