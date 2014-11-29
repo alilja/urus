@@ -1,5 +1,3 @@
-import os
-
 from urus import Urus
 
 
@@ -15,15 +13,10 @@ beers = [
     Beer("tourdefall"),
     Beer("trappist"),
 ]
-#files = os.listdir("reviews")
-#for review_file in files:
-#    beers.append(Beer(review_file[:review_file.find("_reviews.txt")]))
 
-for beer in beers:
-    target_beers = [target_beer for target_beer in beers if target_beer is not beer]
-    for target_beer in target_beers:
-        print "{0} vs. {1}: {2}".format(
-            beer.name,
-            target_beer.name,
-            Urus.calculate_score(beer.tags, target_beer.tags, 10)
-        )
+kmeans = Urus.get_kmeans([beer.tags for beer in beers])
+print kmeans.predict(beers[0].tags)
+
+
+# build k-means dataset
+# then find points nearby in that cluster

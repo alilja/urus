@@ -4,7 +4,9 @@ from collections import Counter
 from pyxdameraulevenshtein import damerau_levenshtein_distance
 levenshtein = damerau_levenshtein_distance
 
-import corpus
+from sklearn.cluster import KMeans
+
+from . import corpus
 
 
 class Urus(object):
@@ -36,23 +38,25 @@ class Urus(object):
         return output
 
     @staticmethod
-    def calculate_score(base, target, n=10):
-        def expected(tags_one, tags_two, word):
-            n_one = sum((freq for (key, freq) in tags_one.most_common(n)))
-            n_two = sum((freq for (key, freq) in tags_two.most_common(n)))
-            return (
-                (n_one * (tags_one[word] + tags_two[word])) /
-                (n_one + n_two)
-            )
+    def equalize_dimensions(beers, replacement=0):
+        """Ensures that all dicts will have the same keys.
 
-        def calculate_chi(tags_one, tags_two, word):
-            exp = expected(tags_one, tags_two, word)
-            return (tags_one[word] - exp  ** 2) / exp
-        chi = 0
-        for i in range(n):
-            for word, frequency in base.items():
-                if word in target.keys():
-                    chi += calculate_chi(base, target, word)
+        Args:
+            beers: The target list of dicts.
+            replacement: If a key doesn't exist in a dictionary, what
+                value should be the new value
 
-        return chi
+        Returns:
+            A list of equalized dicts."""
+        assert len(beers) > 1
+        tag_set = set((key for beer in beers for key in beer))
+        dimensional_data = []
+        for tag in tag_set:
+            dimensional_data.append([beer.get(tag, replacement) for beer in beers])
+        return dimensional_data
 
+    @staticmethod
+    def get_kmeans(beers, clusters=8):
+        """expects a list of beer tags"""
+        assert len(beers) > 2
+        return KMeans(n_clusters=8).fit(Urus.equalize_dimensions(beers))
